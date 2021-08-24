@@ -1,0 +1,13 @@
+*.pt
+*.pkl
+*.geojson
+*.csv
+
+*.vscode/
+__pycache__/
+*.pyc
+input/ERA5_data/
+additional_data/
+models/
+.ipynb_checkpoints/
+catboost_info/

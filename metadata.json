@@ -1,0 +1,4 @@
+{
+    "image": "sberbank/mchs-python",
+    "entry_point": "python3 /app/solution.py"
+}
