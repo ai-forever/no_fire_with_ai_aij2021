@@ -1,0 +1,12 @@
+catboost==0.26
+cfgrib==0.9.9.0
+geopandas==0.9.0
+numpy==1.19.5
+pandas==1.1.5
+torch==1.9.0
+scikit-learn==0.24.2
+xarray==0.19.0
+Cartopy==0.19.0.post1
+OSMPythonTools==0.3.2
+countryinfo==0.1.2
+turfpy==0.0.7
