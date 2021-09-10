@@ -1,12 +1,18 @@
 NoFireWithAI. Описание данных
 =================================
 
-В качестве данных, доступных участникам как на момент обучения моделей, так и в момент инференса в проверяющей системе, могут быть использованы данные реанализа, полученные от Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — данные реанализа "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) Датасет содержит климатические данные в формате .grib за 2018 - 2021 гг. Пример работы с этим форматом приведён в базовом решении к данному соревнованию.
+В качестве данных, доступных участникам как на момент обучения моделей, так и в момент инференса в проверяющей системе, могут быть использованы: 
+
+- Исходные данные по произошедшим [пожарам](link_to_train_raw);
+- Данные [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
+- Данные по населённым пунктам РФ (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
+ - Данные реанализа, полученные от Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — данные реанализа "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) 
 
 
 
 ## Данные реанализа:
 
+Датасет содержит климатические данные в формате .grib за 2018 - 2021 гг. Пример работы с этим форматом приведён в базовом решении к данному соревнованию.
 Перечисленные ниже файлы будут доступны при запуске решений в проверяющей системе по адресу:  
 "input/ERA_5/" :
 
@@ -40,4 +46,3 @@ NoFireWithAI. Описание данных
 | [evaporation2_2019](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/evaporation2_2019.grib) |Runoff, Sub-surface runoff, Surface runoff| 2019|
 | [evaporation2_2020](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/evaporation2_2020.grib) |Runoff, Sub-surface runoff, Surface runoff| 2020|
 | [evaporation2_2021](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/evaporation2_2021.grib) |Runoff, Sub-surface runoff, Surface runoff| 2021|
-
