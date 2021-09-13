@@ -2,24 +2,15 @@ import os
 import gc
 import torch
 import numpy as np
-import pandas as pd
 import torch.nn as nn
 import geopandas as gpd
 import cfgrib
 import helpers
 
 
-def prepare_test(path_to_input, lat_min, lat_max, lon_min, lon_max, step):
-    test = pd.read_csv(os.path.join(path_to_input, "test.csv"), parse_dates=["dt"])
+def prepare_cities(path_to_input, lat_min, lat_max, lon_min, lon_max, step):
     array_of_lats = np.arange(lat_min, lat_max, step).round(1)
     array_of_lons = np.arange(lon_min, lon_max, step).round(1)
-    test = helpers.get_grid_index(test, array_of_lons, array_of_lats)
-    return test, array_of_lats, array_of_lons
-
-
-def prepare_cities(
-    path_to_input, lat_min, lat_max, lon_min, lon_max, array_of_lons, array_of_lats
-):
     cities_df = gpd.read_file(os.path.join(path_to_input, "city_town_village.geojson"))
     cities_df = cities_df[
         ["admin_level", "name", "population", "population:date", "place", "geometry"]
@@ -74,7 +65,7 @@ def save_to_tensors(ds, path_to_pooling, file_name):
 
 def feat_to_tensor(feat_numpy):
     feat_tensor = torch.from_numpy(feat_numpy).unsqueeze(1)
-    feat_tensor = nn.functional.pad(feat_tensor, (0, 0, 1, 0), mode='replicate')
+    feat_tensor = nn.functional.pad(feat_tensor, (0, 0, 1, 0), mode="replicate")
     feat_tensor = torch.flip(feat_tensor, [2])
     return feat_tensor
 
@@ -82,14 +73,20 @@ def feat_to_tensor(feat_numpy):
 def make_avg_pool_feats(feat_tensor, path_to_pooling, file_name, feat_name):
     feat_tensor = nn.functional.avg_pool2d(feat_tensor, kernel_size=3, stride=2)
     feat_tensor = feat_tensor.reshape(feat_tensor.shape[0], -1)
-    torch.save(feat_tensor, os.path.join(path_to_pooling, f"{file_name}_avg_pool_{feat_name}.pt"))
+    torch.save(
+        feat_tensor,
+        os.path.join(path_to_pooling, f"{file_name}_avg_pool_{feat_name}.pt"),
+    )
     del feat_tensor
 
 
 def make_max_pool_feats(feat_tensor, path_to_pooling, file_name, feat_name):
     feat_tensor = nn.functional.max_pool2d(feat_tensor, kernel_size=3, stride=2)
     feat_tensor = feat_tensor.reshape(feat_tensor.shape[0], -1)
-    torch.save(feat_tensor, os.path.join(path_to_pooling, f"{file_name}_max_pool_{feat_name}.pt"))
+    torch.save(
+        feat_tensor,
+        os.path.join(path_to_pooling, f"{file_name}_max_pool_{feat_name}.pt"),
+    )
     del feat_tensor
 
 

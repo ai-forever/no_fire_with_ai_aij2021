@@ -6,14 +6,18 @@ def get_grid_index(df, array_of_lons, array_of_lats):
     col_n = len(array_of_lons)
     temp = df.drop_duplicates(subset=["lon_min", "lat_min"]).reset_index(drop=True)
     for (idx, row) in temp.iterrows():
-        col_i = np.where(array_of_lons == row["lon_min"])[0][0]
-        row_i = np.where(array_of_lats == row["lat_min"])[0][0]
-        temp.loc[(temp.index == idx), "grid_index"] = row_i * col_n + col_i
+        try:
+            col_i = np.where(array_of_lons == row["lon_min"])[0][0]
+            row_i = np.where(array_of_lats == row["lat_min"])[0][0]
+            temp.loc[(temp.index == idx), "grid_index"] = row_i * col_n + col_i
+        except IndexError:
+            temp.loc[(df.index == idx), 'grid_index'] = np.nan
     df = df.merge(
         temp[["lon_min", "lat_min", "lon_max", "lat_max", "grid_index"]],
         how="left",
         on=["lon_min", "lat_min", "lon_max", "lat_max"],
     )
+    df = df[df.grid_index.notna()].reset_index(drop=True)
     df.grid_index = df.grid_index.astype(int)
     return df
 
@@ -34,10 +38,7 @@ def __get_max(row, feat):
 
 
 def __get_min(row, feat):
-    try:
-        return row[f"temp_{feat}"][np.where(row[f"diff_{feat}"] <= 0)[0].max()]
-    except:
-        print(row)
+    return row[f"temp_{feat}"][np.where(row[f"diff_{feat}"] <= 0)[0].max()]
 
 
 def add_edges_polygon(df):
@@ -52,7 +53,7 @@ def add_edges_polygon(df):
     return df
 
 
-def competition_metric(y_true, y_pred):
+def competition_metric(y_true, y_pred, fail_coef=2, С=20):
     assert (
         y_true.shape == y_pred.shape
     ), "Dataset shapes are not equal (y_true.shape != y_pred.shape)"
@@ -65,9 +66,10 @@ def competition_metric(y_true, y_pred):
     y_pred_sums = (
         y_pred.replace(0, np.nan).fillna(axis=1, method="ffill").fillna(0).sum(axis=1)
     )
+    max_penalty = y_true.shape[1] * fail_coef
     days_error_series = y_pred_sums - y_true_sums
-    days_error_series.loc[days_error_series < 0] = days_error_series[days_error_series < 0] * (-2)
-    metric = days_error_series.apply(
-        lambda x: round((20 ** (x / 16) - 1) / (20 - 1), 5)
-    ).mean()
-    return metric
+    days_error_series.loc[days_error_series < 0] = days_error_series[days_error_series < 0] * (-fail_coef)
+    metric = round(days_error_series.apply(
+        lambda x: (С ** (x / max_penalty) - 1) / (С - 1)
+    ).mean(), 5)
+    return 1 - metric
