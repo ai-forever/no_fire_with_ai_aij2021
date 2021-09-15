@@ -1,17 +1,27 @@
 import os
 import time
 import pickle
+import pathlib
+import logging
 import warnings
 import pandas as pd
 import preprocessing, features_generation
 
 warnings.simplefilter("ignore")
 
+logging.basicConfig(
+    format="%(asctime)s %(message)s",
+    datefmt="%Y-%m-%d,%H:%M:%S",
+    level=logging.INFO,
+)
+logger = logging.getLogger(__name__)
 
-PATH_TO_INPUT = "input/"
-PATH_TO_MODELS = "models/"
-PATH_TO_OUTPUT = "output/"
-PATH_TO_ADD_DATA = "additional_data/"
+
+BASE_DIR = pathlib.Path(__file__).parent
+PATH_TO_INPUT = BASE_DIR / "input/"
+PATH_TO_MODELS = BASE_DIR / "models/"
+PATH_TO_OUTPUT = BASE_DIR / "output/"
+PATH_TO_ADD_DATA = BASE_DIR / "additional_data/"
 LAT_MIN, LAT_MAX, LON_MIN, LON_MAX, STEP = 41.0, 81.5, 19.0, 169.0, 0.2
 
 FEATURES = [
@@ -226,11 +236,14 @@ FEATURES = [
 
 if __name__ == "__main__":
     t_start = time.time()
+    logger.info(f"Start processing")
+    logger.info(f"load test")
     test = pd.read_csv(
         os.path.join(PATH_TO_INPUT, "test.csv"),
         index_col="id",
         parse_dates=["dt"],
     )
+    logger.info(f"create cities_df")
     cities_df = preprocessing.prepare_cities(
         PATH_TO_INPUT, LAT_MIN, LAT_MAX, LON_MIN, LON_MAX, STEP
     )
@@ -251,36 +264,47 @@ if __name__ == "__main__":
         and el.endswith("2021.grib")
     ]
     for file_name in grib_list:
+        logger.info(f"make_pool_features {file_name}")
         preprocessing.make_pool_features(
             os.path.join(PATH_TO_INPUT, "ERA5_data"), file_name, PATH_TO_ADD_DATA
         )
+    logger.info(f"add_pooling_features")
     test = features_generation.add_pooling_features(test, PATH_TO_ADD_DATA, count_lag=3)
+    logger.info(f"add_cat_date_features")
     test = features_generation.add_cat_date_features(test)
+    logger.info(f"add_geo_features")
     test = features_generation.add_geo_features(test, cities_df)
 
     result_df = pd.DataFrame()
     models = []
     for idx in range(1, 9):
         path_to_model = os.path.join(PATH_TO_MODELS, f"model_{idx}_day.pkl")
+        logger.info(f"load model_{idx}_day.pkl")
         with open(path_to_model, "rb") as f:
+            logger.info(f"predict for infire_day_{idx+1}")
             model = pickle.load(f)
         result_df[f"infire_day_{idx}"] = (
             model.predict_proba(test[FEATURES])[:, 1] > 0.51
         ).astype(int)
 
+    logger.info(f"load model_mc.pkl")
     with open(os.path.join(PATH_TO_MODELS, "model_mc.pkl"), "rb") as f:
         meta_model = pickle.load(f)
+    logger.info(f"predict for infire_day")
     result_df["infire_day"] = meta_model.predict(test[FEATURES])
     index_to_replace = result_df[
         result_df[[f"infire_day_{day}" for day in range(1, 9)]].sum(axis=1) == 0
     ].index
+    logger.info(f"replace by infire_day")
     for i in range(1, 9):
         result_df.loc[
             (result_df.index.isin(index_to_replace) & (result_df["infire_day"] == i)),
             f"infire_day_{i}",
         ] = 1
+
+    logger.info("save output.csv")
     result_df.drop("infire_day", axis=1).to_csv(
         os.path.join(PATH_TO_OUTPUT, "output.csv"), index_label="id"
     )
     t_end = time.time()
-    print(t_end - t_start, "ok")
+    logger.info(f"Processing time: {t_end - t_start}")
