@@ -281,7 +281,7 @@ if __name__ == "__main__":
         path_to_model = os.path.join(PATH_TO_MODELS, f"model_{idx}_day.pkl")
         logger.info(f"load model_{idx}_day.pkl")
         with open(path_to_model, "rb") as f:
-            logger.info(f"predict for infire_day_{idx+1}")
+            logger.info(f"predict for infire_day_{idx}")
             model = pickle.load(f)
         result_df[f"infire_day_{idx}"] = (
             model.predict_proba(test[FEATURES])[:, 1] > 0.51
