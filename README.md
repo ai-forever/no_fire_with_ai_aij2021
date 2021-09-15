@@ -29,7 +29,7 @@ type_name - расшифровка типа пожара (пусто если п
 В качестве дополнительных данных, доступных участникам как на момент обучения моделей, так и в момент инференса в проверяющей системе, могут быть использованы:
 
 - Исходные данные по произошедшим пожарам - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
-- Таблица для которой требуется сформировать прогнозы пожаров - [test.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/test.csv);
+- Пример таблицы для которой требуется сформировать прогнозы пожаров - [sample_test.csv](https://aij2021.dsworks.s3pd01.sbercloud.ru/NoFireWithAI/sample_test.csv);
 - Предобработанные исходные данные, описываемые в базовом решении - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
 - Данные [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
 - Данные по населённым пунктам РФ (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
