@@ -3,7 +3,9 @@ NoFireWithAI. Описание данных
 
 В качестве данных, доступных участникам как на момент обучения моделей, так и в момент инференса в проверяющей системе, могут быть использованы: 
 
-- Исходные данные по произошедшим [пожарам](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
+- Исходные данные по произошедшим пожарам - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
+- Таблица для которой требуется сформировать прогнозы пожаров - [test.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/test.csv);
+- Предобработанные исходные данные, описываемые в базовом решении - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
 - Данные [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
 - Данные по населённым пунктам РФ (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
  - Данные реанализа, полученные от Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — данные реанализа "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) 
