@@ -1,0 +1,118 @@
+NoFireWithAI: predicting fire hazard
+=================================
+
+Competition between algorithms that predict fire hazard in the region for eight days ahead. 
+
+Participants are suggested to predict a fire in a particular region of Russia using various freely accessible data.
+
+## Task setting
+
+Divide the area of Russia into cells of 0.2x0.2 degrees in size and mark each cell with either fire tag or no-fire tag for a particular date. Therefore, we will get a set of rectangles tagged 1 if there was fire on that day, and a set of squares tagged 0 if not.
+
+We need to develop an algorithm that predicts fires (0 or 1) for 1, 2, 3, 4, 5, 6, 7 and 8 days ahead for a particular cell on a particular day. The solution is to be implemented as a program that accepts a CSV table with the following columns as input:  
+```
+id - id if a line for assessing predictions
+dt - date  
+lon_min - minimum longitude of a cell  
+lat_min - minimum latitude of a cell  
+lon_max - maximum longitude of a cell  
+lat_max - maximum latitude of a cell 
+lon - longitude of a fire in a cell on a particular date (if there was no fire, this is empty)  
+lat - latitude of a fire in a cell on a particular date (if there was no fire, this is empty)  
+grid_index - cell index
+type_id - fire type (if there was no fire, this is empty)  
+type_name - fire type description (if there was no fire, this is empty).  
+```
+
+The output should be a table specifying, for each cell (lines - id  from an input file), 8 numbers (0 or 1) to denote a fire in 1, 2, 3, 4, 5, 6, 7 and 8 days, respectively. Participants should send the algorithm code in ZIP format to the testing system. Solutions shall be run by Docker in the offline mode.
+
+Additional data accessible to participants during model training and inference in the testing system could be:
+
+- Исходные данные по произошедшим пожарам - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
+- Пример таблицы для которой требуется сформировать прогнозы пожаров - [sample_test.csv](https://aij2021.dsworks.s3pd01.sbercloud.ru/NoFireWithAI/sample_test.csv);
+- Предобработанные исходные данные, описываемые в базовом решении - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
+- Данные [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
+- Данные по населённым пунктам РФ (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
+ - Данные реанализа, полученные от Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — данные реанализа "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) Подробное содержание датасета приведено в [input/README.md](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/input/README.md)  
+
+Participants may also use any open data sources for model training, such as satellite photos or fire hazard indices. However, you should bear in mind that, after the solution is uploaded into the testing system, it will work offline, so all extra data needed for prediction should be packed into a Docker container.
+
+
+## Solution format
+
+Participants should send the algorithm code in ZIP format to the testing system. Solutions shall be run by Docker in the offline mode. The testing time and resources are limited. Participants do not need to study the Docker technology.
+
+### Container content
+
+The archive root must contain the metadata.json file containing the following:
+```json
+{
+    "image": "cr.msk.sbercloud.ru/aicloud-base-images-test/custom/aij2021/infire:f66e1b5f-1269",
+    "entrypoint": "python3 /home/jovyan/solution.py"
+}
+```
+
+Where `image` is a field with the docker image name, in which the solution will be run, entrypoint is a command that runs the solution. For solution, the archive root will be the current directory. 
+
+To run solutions, existing environments can be used:
+
+- `cr.msk.sbercloud.ru/aicloud-base-images-test/custom/aij2021/infire:f66e1b5f-1269` — [Dockerfile](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/Dockerfile) with the description of the image and [requirements](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/requirements.txt) with libraries
+
+Any other image which is available in `sbercloud` will be suitable. If necessary, you can prepare your own image, add necessary software and libraries to it (see [the manual on creating Docker images for `sbercloud`](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/sbercloud_instruction.md)); to use it, you will need to publish it on `sbercloud`.
+
+### Limitations
+
+The solution container will be run under the following conditions:
+
+- 16 GB RAM;
+- 4 vCPU;
+- 1 GPU Tesla V100;
+- Time for performance: 30m;
+- Offline solution;
+- Maximal size of your solution archive compressed and decompressed: 10 GB;
+- Maximal size of the Docker image used: 15 GB.
+
+## Quality check
+
+
+The solution shall be evaluated against a lazy fetch.  
+
+The goal of this competition is to find a solution to predict fires. This is not a priority to assess how soon a fire is extinguished, as this depends on many factors. So the metric should use the fire starting tags only. After the first fire starting tag (i.e. first"1" appearing in the forecast), we will consider the cell being ‘on fire’ in the remaining days:
+|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|--|--|--|--|--|--|--|--|--|
+| pred1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
+| pred1_corr |0|0|0|0|0|1|1|1|
+
+
+
+In general, the formula for the metric is as follows:
+```
+total_error = 1 - sum((C**(penalty_i / max(penalty)) - 1) / (C-1)) / N
+
+penalty_i = (-2) * (sum(gt_corr_i) - sum(pred_corr_i)), штраф для i-ой строки, если пожар случился раньше, чем прогнозировался
+penalty_i = (sum(gt_corr_i) - sum(pred_corr_i)), в ином случае
+
+где N - количество строк в прогнозе,
+С=20 - нормировочный коэффициент, 
+pred_corr_i - скорректированный прогноз пожара для i-ой строки,
+gt_corr_i - скорректированное действительное состояние i-ой строки.
+```
+
+Для финальной оценки можно выбрать 3 решения. По умолчанию это решения с наилучшей метрикой на public-лидерборде. Большее значение метрики соответствует лучшему результату (лучшее значение метрики → 1, худшее → 0). В случае одинакового значения метрики у двух или более участников приоритет имеет решение, загруженное в систему раньше.
+
+## Prize pool
+
+1st place - RUB 500,000;  
+2nd place - RUB 250,000;  
+3rd place - RUB 150,000;  
+
+In addition, there is the possibility to be awarded with a special prize of RUB 100,000 given by the panel of experts, which assesses the applicability of solutions to predict dangerous fires. The panel will consider, among others, the following factors:
+
+- transparent reasoning of the model;
+- possibility to determine the importance of attributes useв;
+- total number of attributes and attribute preparation time;
+- speed of the model operation and its size.
+
+To be eligible for the special prize, participants should:
+- be in Top10 in the leaderboard;
+- submit a reproducible solution to train models used in their best attempt.
