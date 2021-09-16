@@ -58,7 +58,7 @@ type_name - расшифровка типа пожара (пусто если п
 
 - `cr.msk.sbercloud.ru/aicloud-base-images-test/custom/aij2021/infire:f66e1b5f-1269` — [Dockerfile](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/Dockerfile) с описанием данного image и [requirements](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/requirements.txt) с библиотеками
 
-Подойдет любой другой образ, доступный для загрузки из `sbercloud`. При необходимости, Вы можете подготовить свой образ, добавить в него необходимое ПО и библиотеки (см. инструкцию по созданию Docker-образов для `sbercloud`); для использования его необходимо будет опубликовать на `sbercloud`.
+Подойдет любой другой образ, доступный для загрузки из `sbercloud`. При необходимости, Вы можете подготовить свой образ, добавить в него необходимое ПО и библиотеки (см. [инструкцию по созданию Docker-образов для `sbercloud`](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/sbercloud_instruction.md)); для использования его необходимо будет опубликовать на `sbercloud`.
 
 ### Ограничения
 
