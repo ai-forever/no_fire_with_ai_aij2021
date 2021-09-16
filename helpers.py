@@ -53,7 +53,7 @@ def add_edges_polygon(df):
     return df
 
 
-def competition_metric(y_true, y_pred, fail_coef=2, С=20):
+def competition_metric(y_true, y_pred, fail_coef=2, C=20):
     assert (
         y_true.shape == y_pred.shape
     ), "Dataset shapes are not equal (y_true.shape != y_pred.shape)"
@@ -70,6 +70,6 @@ def competition_metric(y_true, y_pred, fail_coef=2, С=20):
     days_error_series = y_pred_sums - y_true_sums
     days_error_series.loc[days_error_series < 0] = days_error_series[days_error_series < 0] * (-fail_coef)
     metric = round(days_error_series.apply(
-        lambda x: (С ** (x / max_penalty) - 1) / (С - 1)
+        lambda x: (C ** (x / max_penalty) - 1) / (C - 1)
     ).mean(), 5)
     return 1 - metric
