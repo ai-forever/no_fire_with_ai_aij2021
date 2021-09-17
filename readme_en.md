@@ -95,7 +95,7 @@ penalty_i = (-2) * (sum(gt_corr_i) - sum(pred_corr_i)), penalty for the i-th row
 penalty_i = (sum(gt_corr_i) - sum(pred_corr_i)), in another case
 
 where N is the number of rows in the forecast,
-С=20 - is the normalization factor, 
+С=5 - is the normalization factor, 
 pred_corr_i - is adjusted fire forecast for the i-th row,
 gt_corr_i - is the corrected actual state of the i-th row.
 ```

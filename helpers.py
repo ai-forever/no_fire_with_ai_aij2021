@@ -53,7 +53,7 @@ def add_edges_polygon(df):
     return df
 
 
-def competition_metric(y_true, y_pred, fail_coef=2, C=20):
+def competition_metric(y_true, y_pred, fail_coef=2, C=5):
     assert (
         y_true.shape == y_pred.shape
     ), "Dataset shapes are not equal (y_true.shape != y_pred.shape)"
