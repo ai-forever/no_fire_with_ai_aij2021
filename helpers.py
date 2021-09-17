@@ -72,4 +72,4 @@ def competition_metric(y_true, y_pred, fail_coef=2, C=5):
     metric = round(days_error_series.apply(
         lambda x: (C ** (x / max_penalty) - 1) / (C - 1)
     ).mean(), 5)
-    return 1 - metric
+    return round(1 - metric, 5)
