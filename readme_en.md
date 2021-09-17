@@ -28,12 +28,12 @@ The output should be a table specifying, for each cell (lines - id  from an inpu
 
 Additional data accessible to participants during model training and inference in the testing system could be:
 
-- Исходные данные по произошедшим пожарам - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
-- Пример таблицы для которой требуется сформировать прогнозы пожаров - [sample_test.csv](https://aij2021.dsworks.s3pd01.sbercloud.ru/NoFireWithAI/sample_test.csv);
-- Предобработанные исходные данные, описываемые в базовом решении - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
-- Данные [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
-- Данные по населённым пунктам РФ (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
- - Данные реанализа, полученные от Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — данные реанализа "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) Подробное содержание датасета приведено в [input/README.md](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/input/README.md)  
+- Initial data on the occurred fires - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
+- Example of a table for which it is necessary to generate fires forecasts - [sample_test.csv](https://aij2021.dsworks.s3pd01.sbercloud.ru/NoFireWithAI/sample_test.csv);
+- Preprocessed raw data described in the base solution - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
+- Data [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
+- Data on inhabited locality of the Russian Federation (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
+-	Reanalysis data obtained from Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — reanalysis data "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) The detailed content of the dataset is given in [input/README.md](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/input/README.md)  
 
 Participants may also use any open data sources for model training, such as satellite photos or fire hazard indices. However, you should bear in mind that, after the solution is uploaded into the testing system, it will work offline, so all extra data needed for prediction should be packed into a Docker container.
 
@@ -89,16 +89,16 @@ In general, the formula for the metric is as follows:
 ```
 total_error = 1 - sum((C**(penalty_i / max(penalty)) - 1) / (C-1)) / N
 
-penalty_i = (-2) * (sum(gt_corr_i) - sum(pred_corr_i)), штраф для i-ой строки, если пожар случился раньше, чем прогнозировался
-penalty_i = (sum(gt_corr_i) - sum(pred_corr_i)), в ином случае
+penalty_i = (-2) * (sum(gt_corr_i) - sum(pred_corr_i)), penalty for the i-th row if the fire happened earlier than predicted
+penalty_i = (sum(gt_corr_i) - sum(pred_corr_i)), in another case
 
-где N - количество строк в прогнозе,
-С=20 - нормировочный коэффициент, 
-pred_corr_i - скорректированный прогноз пожара для i-ой строки,
-gt_corr_i - скорректированное действительное состояние i-ой строки.
+where N is the number of rows in the forecast,
+С=20 - is the normalization factor, 
+pred_corr_i - is adjusted fire forecast for the i-th row,
+gt_corr_i - is the corrected actual state of the i-th row.
 ```
 
-Для финальной оценки можно выбрать 3 решения. По умолчанию это решения с наилучшей метрикой на public-лидерборде. Большее значение метрики соответствует лучшему результату (лучшее значение метрики → 1, худшее → 0). В случае одинакового значения метрики у двух или более участников приоритет имеет решение, загруженное в систему раньше.
+You may choose three solutions to submit for the final assessment. By default, these will be solutions with the best public Leaderboard metric (The best metric value is → 1, the worst is → 0). Higher metric values mean higher results. If two or more participants have the same metric values, the solution uploaded to the system earlier is preferred.
 
 ## Prize pool
 
