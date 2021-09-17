@@ -28,12 +28,14 @@ The output should be a table specifying, for each cell (lines - id  from an inpu
 
 Additional data accessible to participants during model training and inference in the testing system could be:
 
-- Initial data on the occurred fires - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
-- Example of a table for which it is necessary to generate fires forecasts - [sample_test.csv](https://aij2021.dsworks.s3pd01.sbercloud.ru/NoFireWithAI/sample_test.csv);
-- Preprocessed raw data described in the base solution - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
+
+- Initial data on the occurred fires - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv)  
+- Example of a table for which it is necessary to generate fires forecasts - [sample_test.csv](https://aij2021.dsworks.s3pd01.sbercloud.ru/NoFireWithAI/sample_test.csv)  
+- Preprocessed raw data described in the base solution - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)  
 - Data [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
-- Data on inhabited locality of the Russian Federation (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
--	Reanalysis data obtained from Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — reanalysis data "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) The detailed content of the dataset is given in [input/README.md](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/input/README.md)  
+- Data on inhabited locality of the Russian Federation (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)  
+- Reanalysis data obtained from Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — reanalysis data "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) The detailed content of the dataset is given in [input/README.md](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/input/README.md)  
+
 
 Participants may also use any open data sources for model training, such as satellite photos or fire hazard indices. However, you should bear in mind that, after the solution is uploaded into the testing system, it will work offline, so all extra data needed for prediction should be packed into a Docker container.
 
@@ -109,7 +111,7 @@ You may choose three solutions to submit for the final assessment. By default, t
 In addition, there is the possibility to be awarded with a special prize of RUB 100,000 given by the panel of experts, which assesses the applicability of solutions to predict dangerous fires. The panel will consider, among others, the following factors:
 
 - transparent reasoning of the model;
-- possibility to determine the importance of attributes useв;
+- possibility to determine the importance of attributes used;
 - total number of attributes and attribute preparation time;
 - speed of the model operation and its size.
 
