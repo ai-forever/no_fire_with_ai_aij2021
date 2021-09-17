@@ -69,7 +69,7 @@ def competition_metric(y_true, y_pred, fail_coef=2, C=5):
     max_penalty = y_true.shape[1] * fail_coef
     days_error_series = y_pred_sums - y_true_sums
     days_error_series.loc[days_error_series < 0] = days_error_series[days_error_series < 0] * (-fail_coef)
-    metric = round(days_error_series.apply(
+    metric = days_error_series.apply(
         lambda x: (C ** (x / max_penalty) - 1) / (C - 1)
-    ).mean(), 5)
+    ).mean()
     return round(1 - metric, 5)
