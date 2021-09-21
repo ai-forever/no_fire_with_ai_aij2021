@@ -115,3 +115,7 @@ gt_corr_i - скорректированное действительное со
 Участники, претендующие на спец. приз должны:
 - входить в топ-10 на лидерборде;
 - предоставить воспроизводимое решение для обучения моделей, использовавшихся в их лучшей попытке.
+
+##
+[Пользовательское соглашение](https://api.dsworks.ru/dsworks-transfer/api/v1/public/file/terms_of_use.pdf/download)  
+[Правила соревнования](https://api.dsworks.ru/dsworks-transfer/api/v1/public/file/rules.pdf/download)
