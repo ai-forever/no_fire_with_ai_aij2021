@@ -79,11 +79,9 @@ The solution container will be run under the following conditions:
 
 The solution shall be evaluated against a lazy fetch.  
 
-The goal of this competition is to find a solution to predict fires. This is not a priority to assess how soon a fire is extinguished, as this depends on many factors. So the metric should use the fire starting tags only. After the first fire starting tag (i.e. first"1" appearing in the forecast), we will consider the cell being ‘on fire’ in the remaining days:
-|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|--|--|--|--|--|--|--|--|--|
-| pred1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
-| pred1_corr |0|0|0|0|0|1|1|1|
+The goal of this competition is to find a solution to predict fires. This is not a priority to assess how soon a fire is extinguished, as this depends on many factors. So the metric should use the fire starting tags only. After the first fire starting tag (i.e. first"1" appearing in the forecast), we will consider the cell being ‘on fire’ in the remaining days:  
+
+![Corrected forecast](https://raw.githubusercontent.com/sberbank-ai/no_fire_with_ai_aij2021/main/input/burned_cells.png)
 
 
 
