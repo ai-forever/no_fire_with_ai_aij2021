@@ -118,3 +118,8 @@ In addition, there is the possibility to be awarded with a special prize of RUB 
 To be eligible for the special prize, participants should:
 - be in Top10 in the leaderboard;
 - submit a reproducible solution to train models used in their best attempt.
+
+
+##
+[Пользовательское соглашение](https://api.dsworks.ru/dsworks-transfer/api/v1/public/file/terms_of_use.pdf/download)  
+[Правила соревнования](https://api.dsworks.ru/dsworks-transfer/api/v1/public/file/rules.pdf/download)
