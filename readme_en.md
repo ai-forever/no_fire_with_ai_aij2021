@@ -1,5 +1,6 @@
 NoFireWithAI: predicting fire hazard
 =================================
+[github](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/readme_en.md)
 
 Competition between algorithms that predict fire hazard in the region for eight days ahead. 
 
