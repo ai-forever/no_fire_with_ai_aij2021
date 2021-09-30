@@ -9,7 +9,7 @@ NoFireWithAI. Инструкция по работе со `sbercloud`
  - `docker login cr.msk.sbercloud.ru` - выполняем команду, логинимся в `sbercloud`
  ```
         Username: aijcontest
-        Password: aijcontest
+        Password: AIjcontest21
 
 ```
 - `docker pull cr.msk.sbercloud.ru/aicloud-base-images/horovod-cuda10.2` - команда для загрузки контейнера на локальную машину
