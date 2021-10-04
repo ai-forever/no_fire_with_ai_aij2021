@@ -69,7 +69,7 @@ The solution container will be run under the following conditions:
 
 - 16 GB RAM;
 - 4 vCPU;
-- 1 GPU Tesla V100;
+- 1 GPU Tesla V100 32 Gb;
 - Time for performance: 30m;
 - Offline solution;
 - Maximal size of your solution archive compressed and decompressed: 10 GB;
@@ -88,7 +88,7 @@ The goal of this competition is to find a solution to predict fires. This is not
 
 In general, the formula for the metric is as follows:
 ```
-total_error = 1 - sum((C**(penalty_i / max(penalty)) - 1) / (C-1)) / N
+total_error = 1 - sum((C**(penalty_i / 16) - 1) / (C-1)) / N
 
 penalty_i = (-2) * (sum(gt_corr_i) - sum(pred_corr_i)), penalty for the i-th row if the fire happened earlier than predicted
 penalty_i = (sum(gt_corr_i) - sum(pred_corr_i)), in another case
