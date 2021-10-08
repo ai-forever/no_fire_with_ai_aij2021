@@ -213,8 +213,8 @@ def make_train(path, array_of_lons, array_of_lats, step, start_date):
     # Объединяем ячейки на суше с таргетами, берем все пожары и случайно те даты, в которых не было пожаров
     df_is_land = make_df_only_land(grid_df, targets, start_date)
 
-    # Объединяем ячейки не на суше с таргетами, берем точно такое же кол-во ячеек, и строк
-    # как и для ячеек на суше, проставляем в таргеты нули
+    # Объединяем ячейки не на суше с таргетами, берем точно такое же кол-во строк
+    # как и в df_is_land, проставляем в таргеты нули
     df_not_land = make_df_not_land(grid_df, targets, df_is_land, start_date)
     train = (
         pd.concat([df_is_land, df_not_land])
