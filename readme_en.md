@@ -101,7 +101,12 @@ pred_corr_i - is adjusted fire forecast for the i-th row,
 gt_corr_i - is the corrected actual state of the i-th row.
 ```
 
-You may choose three solutions to submit for the final assessment. By default, these will be solutions with the best public Leaderboard metric (The best metric value is → 1, the worst is → 0). Higher metric values mean higher results. If two or more participants have the same metric values, the solution uploaded to the system earlier is preferred.
+You may choose three solutions to submit for the final assessment. By default, these will be solutions with the best public Leaderboard metric (The best metric value is → 1, the worst is → 0). Higher metric values mean higher results.  
+
+In the case of the same metric values by several Participants, their solutions are evaluated by processing time (time spent on processing tasks). The faster the decision is processed, the higher the position in the leaderboard.  
+
+If both the metric values and the processing time of the models for several Participants are the same, then the time it takes to upload the solution to the Contest Site will be taken into account. The previously uploaded solution to the Contest Site will be assigned a higher place.
+
 
 ## Prize pool
 
