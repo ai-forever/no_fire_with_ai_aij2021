@@ -62,7 +62,7 @@ To run solutions, existing environments can be used:
 
 - `cr.msk.sbercloud.ru/aicloud-base-images-test/custom/aij2021/infire:f66e1b5f-1269` — [Dockerfile](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/Dockerfile) with the description of the image and [requirements](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/requirements.txt) with libraries
 
-Any other image which is available in `sbercloud` will be suitable. If necessary, you can prepare your own image, add necessary software and libraries to it (see [the manual on creating Docker images for `sbercloud`](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/sbercloud_instruction.md)); to use it, you will need to publish it on `sbercloud`.
+Any other image which is available in `sbercloud` will be suitable. If necessary, you can prepare your own image, add necessary software and libraries to it (see [the manual on creating Docker images for `sbercloud`](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/sbercloud_instruction_en.md)); to use it, you will need to publish it on `sbercloud`.
 
 ### Limitations
 
