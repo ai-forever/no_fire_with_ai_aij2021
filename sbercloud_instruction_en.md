@@ -3,7 +3,7 @@ NoFireWithAI. The manual on creating Docker images for `sbercloud`
 
 ## 1. Basic images
  - In the file [metadata.json](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/metadata.json) as the value of the key **"image"** can specify one of [basic images for training](https://docs.sbercloud.ru/aicloud/mlspace/concepts/environments__basic-images-for-training.html).  
- (или же на платформу `sbercloud` you can push your own custom image to avoid mistakes, **recommended to inherit from basic images**)
+ (or on the platform `sbercloud` you can push your own custom image to avoid mistakes, **recommended to inherit from basic images**)
  
  ## 2. Loading the base image on the local machine from `sbercloud`
  - `docker login cr.msk.sbercloud.ru` - execute a command, login to `sbercloud`
