@@ -32,9 +32,9 @@ type_name - расшифровка типа пожара (пусто если п
 
 В качестве дополнительных данных, доступных участникам как на момент обучения моделей, так и в момент инференса в проверяющей системе, могут быть использованы:
 
-- Исходные данные по произошедшим пожарам - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train_raw.csv);
-- Пример таблицы для которой требуется сформировать прогнозы пожаров - [sample_test.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/sample_test.csv);
-- Предобработанные исходные данные, описываемые в базовом решении - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/train.csv)
+- Исходные данные по произошедшим пожарам - [train_raw.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/trаin_raw.csv);
+- Пример таблицы для которой требуется сформировать прогнозы пожаров - [sample_test.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/sаmple_test.csv);
+- Предобработанные исходные данные, описываемые в базовом решении - [train.csv](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/trаin.csv)
 - Данные [openstreetmap](https://www.openstreetmap.org)  - [russia-latest.osm.pbf](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/russia-latest.osm.pbf)
 - Данные по населённым пунктам РФ (https://wiki.openstreetmap.org/wiki/RU:Key:place) - [city_town_village.geojson](https://dsworks.s3pd01.sbercloud.ru/aij2021/NoFireWithAI/city_town_village.geojson)
  - Данные реанализа, полученные от Copernicus.eu ([ERA5](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land)  — данные реанализа "(2019): ERA5-Land hourly data from 1981 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS)". ) Подробное содержание датасета приведено в [input/README.md](https://github.com/sberbank-ai/no_fire_with_ai_aij2021/blob/main/input/README.md)  
